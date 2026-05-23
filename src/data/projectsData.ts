@@ -42,8 +42,8 @@ export const projectsData: ProjectData[] = [
     title: "Real-Time Health Tracking Vest",
     tagline: "Full-stack IoT dashboard and mobile interface for smart sensory shirts handling real-time streams.",
     description: "A high-performance IoT system designed to aggregate, parse, and visualize vital biosignals (ECG, Heart Rate, Respiratory Rate, Temperature) streamed continuously from smart textile vests.",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDbN5NVr9TpBCqqTNjZbl0Gds0qk8uCZPND_PEjML0NMAjlr4fwEd9R8LAlh42WJy3s2MitthrTnM3vejKIsjy5kmf4Ns6aT_4Z8Mo657gvIa7ji3-hcrs2mxHVemy1LjsvNb1wr0MtNQOYA7bgctHibD4PwTLd97n2ERSbw-m0pAZPmYM8WYSyHxlSPQA5XR5NNJnoxC0Uxp0Xpr1lDucp4B2g5A7NZQjda5V09QK4RKWircExqCodSDbVBpSuAJpc4GjlY_gH5rA",
-    technologies: ["Flutter", "Node.js", "Express", "Socket.io", "MongoDB", "IoT Protocols"],
+    image: "/whms_dashboard.png",
+    technologies: ["React", "Redux Toolkit", "Bootstrap", "Node.js", "Express", "MongoDB", "Firebase Auth", "AWS CloudWatch"],
     role: "Lead Full Stack Architect",
     timeline: "8 Months (2023 - 2024)",
     metrics: [
@@ -52,29 +52,30 @@ export const projectsData: ProjectData[] = [
       { label: "Battery Efficiency", value: "+30% savings" },
       { label: "Crash Rate", value: "< 0.05%" }
     ],
-    githubUrl: "https://github.com/kirtish10",
-    challenge: "Handling concurrent, continuous data streams from hardware vests over unstable Bluetooth/Cellular links without message loss, while ensuring the central dashboard visualizes live high-frequency waves (like ECG graphs) smoothly at 60fps without freezing user devices.",
-    solution: "Built a double-buffered data pipeline. Vests stream raw binary telemetry over BLE to a custom Flutter mobile app which compresses and batches packets. The packets are published to a Node.js server using binary WebSocket frames, which handles backpressure gracefully, caches active frames in Redis, and persists key intervals to MongoDB while broadcasting telemetry downstream to dashboard clients using Socket.IO namespaces.",
-    architectureNotes: "Continuous data streams flow from wearable hardware to mobile nodes, which acts as the edge computing gateway, performing threshold filtration before publishing to the high-throughput Node.js microservice.",
+    githubUrl: "https://github.com/bugzzbunny007/WHMS_ISRO",
+    challenge: "Developing a secure, high-integrity telemetry ingestion backend and real-time dashboard for wearable health monitors. It must support multi-tier authorization (User/Admin/Super Admin), scale telemetry logs, handle silent token refreshes, and maintain a seamless responsive experience for viewing astronaut biosignals on variable devices.",
+    solution: "Engineered a responsive React dashboard styled with React Bootstrap and backed by Redux Toolkit for unified global state management and token administration. Implemented secure REST request piping via Axios, managing dynamic JWT decoding and interceptors for silent token refreshes. Backed this with a hybrid Node.js Express server using Firebase Admin SDK for zero-trust 3-factor authentication (OTP and email), persisting profile records in MongoDB (Mongoose), and streaming remote exception telemetry to AWS CloudWatch Logs.",
+    architectureNotes: "The frontend integrates Redux slices for auth/profile states and utilizes Axios interceptors for resilient session handling. The backend leverages Mongoose schemas for metadata synchronization and standard Firebase APIs to verify identities, with security events dynamically forwarded to AWS CloudWatch.",
     outcomes: [
-      "Orchestrated back-end that scales smoothly to sustain 100+ continuous high-frequency health streams simultaneously.",
-      "Engineered automated anomaly detection rules identifying irregular cardiovascular events in under 250ms, sending immediate push notifications.",
-      "Optimized data payload sizes by 45% using Protobuf binary compression instead of raw JSON frames."
+      "Engineered a modular React portal styled with Bootstrap, using Redux Toolkit slices for unified auth and physical user profile state synchronization.",
+      "Implemented secure API request interception via Axios, supporting silent session refreshes and role-based client routing based on JWT decoding.",
+      "Integrated Firebase Admin SDK on the Express backend to enforce multi-role (User, Admin, Super Admin) biometric data access control with custom token generation.",
+      "Developed a synchronized local MongoDB profile database mapping secure Firebase UIDs to user age, weight, height, and gender variables, streaming all exceptions directly to AWS CloudWatch Logs."
     ],
     architectureNodes: [
       { id: "vest", label: "Smart Textile Vest", details: "Fitted with biosensors sending analog signals at high frequencies.", type: "external" },
-      { id: "mobile", label: "Flutter Edge App", details: "BLE gateway. Gathers raw data, buffers locally, performs compression.", type: "frontend" },
-      { id: "node", label: "Node.js Ingestion Engine", details: "Express web server with Socket.IO. Manages connections and backpressure.", type: "backend" },
-      { id: "redis", label: "Redis Buffer Cache", details: "Fast memory layer holding transient live active stream states.", type: "database" },
-      { id: "mongo", label: "MongoDB Store", details: "Stores archived historical logs and aggregate statistical trends.", type: "database" },
-      { id: "dashboard", label: "React Health Portal", details: "Visualizes high-performance ECG charts using Canvas API.", type: "frontend" }
+      { id: "firebase", label: "Firebase Auth Service", details: "Manages email verifications, OTP verification, and secure ID tokens.", type: "external" },
+      { id: "node", label: "Node.js Express Server", details: "Core backend executing route controllers and enforcing fetchuser authentication.", type: "backend" },
+      { id: "mongo", label: "MongoDB Database", details: "Holds structured user metadata, master profiles, and initial registration records via Mongoose.", type: "database" },
+      { id: "cloudwatch", label: "AWS CloudWatch Logs", details: "Streams system telemetry, authentication audits, and error traces in real-time.", type: "external" },
+      { id: "dashboard", label: "React Dashboard (WHMS_DASH)", details: "Built with React, Bootstrap, and Redux Toolkit to visualize real-time vitals and profiles.", type: "frontend" }
     ],
     architectureEdges: [
-      { from: "vest", to: "mobile", label: "Bluetooth BLE" },
-      { from: "mobile", to: "node", label: "WebSockets (Binary)" },
-      { from: "node", to: "redis", label: "Pub/Sub Cached" },
-      { from: "node", to: "mongo", label: "Mongoose ODM" },
-      { from: "node", to: "dashboard", label: "Socket.IO Broadcast" }
+      { from: "vest", to: "node", label: "Telemetry Stream" },
+      { from: "node", to: "firebase", label: "Token Verification" },
+      { from: "node", to: "mongo", label: "Mongoose ODM Sync" },
+      { from: "node", to: "cloudwatch", label: "AWS SDK Log Stream" },
+      { from: "dashboard", to: "node", label: "Axios REST Requests with Interceptors" }
     ]
   },
   {
