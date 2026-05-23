@@ -1,0 +1,227 @@
+@import "tailwindcss";
+
+@theme {
+  --color-inverse-surface: #e1e2ee;
+  --color-tertiary-fixed-dim: #ffb596;
+  --color-surface-container-lowest: #0b0e16;
+  --color-on-primary-fixed: #00184a;
+  --color-primary-container: #5f8bff;
+  --color-primary: #b3c5ff;
+  --color-error-container: #93000a;
+  --color-tertiary-container: #ee6721;
+  --color-inverse-primary: #0054d8;
+  --color-tertiary-fixed: #ffdbcd;
+  --color-outline: #8c90a1;
+  --color-on-secondary-fixed: #23005c;
+  --color-on-secondary: #3c0091;
+  --color-surface-tint: #b3c5ff;
+  --color-on-secondary-container: #c4abff;
+  --color-surface-bright: #373942;
+  --color-on-error-container: #ffdad6;
+  --color-outline-variant: #424655;
+  --color-on-tertiary-fixed-variant: #7d2d00;
+  --color-surface-dim: #11131b;
+  --color-surface-container: #1d1f28;
+  --color-surface-variant: #32343e;
+  --color-surface: #11131b;
+  --color-secondary-container: #571bc1;
+  --color-primary-fixed-dim: #b3c5ff;
+  --color-error: #ffb4ab;
+  --color-surface-container-high: #272a33;
+  --color-inverse-on-surface: #2e3039;
+  --color-on-primary-fixed-variant: #003fa5;
+  --color-on-secondary-fixed-variant: #5516be;
+  --color-on-primary-container: #002468;
+  --color-on-background: #e1e2ee;
+  --color-secondary-fixed-dim: #d0bcff;
+  --color-on-tertiary-fixed: #360f00;
+  --color-on-primary: #002a76;
+  --color-surface-container-highest: #32343e;
+  --color-surface-container-low: #191b24;
+  --color-on-tertiary-container: #4d1900;
+  --color-on-tertiary: #581e00;
+  --color-tertiary: #ffb596;
+  --color-secondary: #d0bcff;
+  --color-on-error: #690005;
+  --color-primary-fixed: #dbe1ff;
+  --color-secondary-fixed: #e9ddff;
+  --color-background: #11131b;
+  --color-on-surface-variant: #c2c6d8;
+  --color-on-surface: #e1e2ee;
+  --color-glow-violet: rgba(139, 92, 246, 0.4);
+  --color-glow-cyan: rgba(0, 229, 255, 0.4);
+  --color-accent-lime: #ccff00;
+  --color-glass-stroke: rgba(255, 255, 255, 0.12);
+
+  --spacing-section-gap: 8rem;
+  --spacing-gutter: 24px;
+  --spacing-container-max: 1280px;
+  --spacing-element-gap: 1.5rem;
+  --spacing-margin-mobile: 16px;
+
+  --font-headline-md: "Plus Jakarta Sans", sans-serif;
+  --font-label-caps: "Hanken Grotesk", sans-serif;
+  --font-display-lg-mobile: "Plus Jakarta Sans", sans-serif;
+  --font-display-lg: "Plus Jakarta Sans", sans-serif;
+  --font-body-md: "Hanken Grotesk", sans-serif;
+  --font-body-lg: "Hanken Grotesk", sans-serif;
+}
+
+body {
+  background-color: #11131b;
+  color: #e1e2ee;
+  font-family: var(--font-body-md);
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+/* Custom Interactive Effects */
+.glass {
+  backdrop-filter: blur(20px);
+  background: rgba(17, 19, 27, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Dot Matrix Grid Layer */
+#dot-matrix-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  pointer-events: none;
+  overflow: hidden;
+  background: #11131b;
+}
+
+.dot-matrix {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, #424655 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.15;
+}
+
+#dot-matrix-highlight {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, #5f8bff 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+  opacity: 0;
+  mask-image: radial-gradient(circle 200px at var(--mouse-x, -500px) var(--mouse-y, -500px), black, transparent);
+  -webkit-mask-image: radial-gradient(circle 200px at var(--mouse-x, -500px) var(--mouse-y, -500px), black, transparent);
+  transition: opacity 0.5s ease;
+}
+
+.ambient-glow {
+  position: fixed;
+  width: 60vw;
+  height: 60vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(95, 139, 255, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+  filter: blur(80px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Flashlight mouse tracker */
+#flashlight {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 100;
+  background: radial-gradient(circle 400px at var(--mouse-x, -1000px) var(--mouse-y, -1000px), rgba(95, 139, 255, 0.05), transparent 80%);
+}
+
+/* Conic Glowing Cards */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.glowing-card {
+  position: relative;
+  background: rgba(17, 19, 27, 0.7);
+  border-radius: 1.5rem;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.glowing-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: conic-gradient(from var(--angle), transparent 70%, #5f8bff, #b3c5ff, transparent);
+  border-radius: inherit;
+  z-index: -1;
+  animation: rotate-glow 4s linear infinite;
+}
+
+.glowing-card::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  background: rgba(29, 31, 40, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+@keyframes rotate-glow {
+  0% { --angle: 0deg; }
+  100% { --angle: 360deg; }
+}
+
+/* Scroll reveals */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.shimmer-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: shimmer 2s infinite;
+}
+
+#typewriter-code {
+  border-right: 2px solid rgba(95, 139, 255, 0.5);
+  white-space: pre-wrap;
+  display: inline-block;
+}
+
+.interactive-element {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.interactive-element:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 25px rgba(95, 139, 255, 0.2);
+}
+
+/* Hide scrollbars but keep functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
