@@ -9,7 +9,7 @@ interface SkillBarProps {
 
 const SkillBar: React.FC<SkillBarProps> = ({ name, percent, percentageText, subtitle }) => {
   return (
-    <div className="glass p-6 rounded-2xl space-y-4 hover:bg-surface-container-high transition-all interactive-element border border-glass-stroke">
+    <div className="glass p-6 rounded-[2rem] space-y-4 hover:bg-surface-container-high transition-all interactive-element border border-glass-stroke">
       <div className="flex justify-between items-center select-none">
         <span className="font-bold text-on-surface">{name}</span>
         <span className="text-primary-fixed-dim text-sm font-semibold">{percentageText}</span>

@@ -13,7 +13,7 @@ const RoleCard: React.FC<RoleProps> = ({ timeline, title, company, points, align
   return (
     <div className={`relative flex flex-col md:flex-row items-center gap-8 group ${align === 'right' ? 'md:flex-row-reverse' : ''}`}>
       <div className={`md:w-1/2 w-full ${align === 'left' ? 'md:text-right text-left' : 'md:text-left text-left'}`}>
-        <div className="glowing-card p-6 rounded-2xl transition-all interactive-element experience-card border border-glass-stroke">
+        <div className="glowing-card p-6 rounded-[2rem] transition-all interactive-element experience-card border border-glass-stroke">
           <span className={`text-label-caps font-bold ${badgeColor}`}>{timeline}</span>
           <h3 className="font-headline-md text-body-lg font-bold mt-2 text-on-surface">{title}</h3>
           <p className="text-on-surface-variant font-medium mt-1">{company}</p>

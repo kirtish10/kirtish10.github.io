@@ -26,7 +26,7 @@ export const Contact: React.FC = () => {
 
   return (
     <section className="section-gap px-margin-mobile md:px-gutter max-w-4xl mx-auto pb-32 reveal" id="contact">
-      <div className="glass rounded-3xl p-8 md:p-16 relative overflow-hidden interactive-element border border-glass-stroke">
+      <div className="glass rounded-[2rem] p-8 md:p-16 relative overflow-hidden interactive-element border border-glass-stroke">
         <div className="absolute -top-24 -right-24 w-64 h-64 bg-glow-violet blur-[80px] opacity-20 pointer-events-none" />
         
         <div className="text-center mb-12 select-none">

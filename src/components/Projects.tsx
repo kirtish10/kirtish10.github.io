@@ -39,14 +39,14 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectTech }) => {
 
   return (
     <section className="section-gap px-margin-mobile md:px-gutter max-w-container-max mx-auto reveal animate-fade-in" id="projects">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6 select-none">
+      <div className="text-center mb-16 select-none max-w-2xl mx-auto space-y-6">
         <div>
           <h2 className="font-headline-md text-headline-md font-bold text-on-surface">Selected Works</h2>
-          <p className="text-on-surface-variant mt-1">Architectures designed for enterprise scale and precision.</p>
+          <p className="text-on-surface-variant mt-1.5">Architectures designed for enterprise scale and precision.</p>
         </div>
 
-        {/* Dynamic Interactive Filter Badges */}
-        <div className="flex flex-wrap gap-2 max-w-xl">
+        {/* Dynamic Interactive Filter Badges Centered */}
+        <div className="flex flex-wrap justify-center gap-2.5">
           {allTechs.map((tech) => (
             <button
               key={tech}
@@ -72,9 +72,9 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectTech }) => {
             return (
               <div 
                 key={project.id}
-                className={`${span} group relative overflow-hidden rounded-3xl glowing-card p-1 interactive-element project-card border border-glass-stroke`}
+                className={`${span} group relative overflow-hidden rounded-[2rem] glowing-card p-1 interactive-element project-card border border-glass-stroke`}
               >
-                <div className="h-[400px] w-full relative rounded-[22px] overflow-hidden">
+                <div className="h-[400px] w-full relative rounded-[1.75rem] overflow-hidden">
                   <img 
                     alt={project.title} 
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
@@ -106,7 +106,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectTech }) => {
             return (
               <div 
                 key={project.id}
-                className={`${span} group glowing-card rounded-3xl p-8 flex flex-col justify-between transition-all interactive-element project-card border border-glass-stroke`}
+                className={`${span} group glowing-card rounded-[2rem] p-8 flex flex-col justify-between transition-all interactive-element project-card border border-glass-stroke`}
               >
                 <div className="relative z-10">
                   <div className="w-12 h-12 rounded-xl bg-primary-fixed-dim/20 flex items-center justify-center text-primary-fixed-dim mb-6">
@@ -136,12 +136,12 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectTech }) => {
             return (
               <div 
                 key={project.id}
-                className={`${span} glowing-card rounded-3xl p-8 flex flex-col md:flex-row items-center gap-12 group interactive-element project-card border border-glass-stroke`}
+                className={`${span} glowing-card rounded-[2rem] p-8 flex flex-col md:flex-row items-center gap-12 group interactive-element project-card border border-glass-stroke`}
               >
-                <div className="md:w-1/2 w-full relative z-10 overflow-hidden rounded-2xl">
+                <div className="md:w-1/2 w-full relative z-10 overflow-hidden rounded-[1.5rem]">
                   <img 
                     alt={project.title} 
-                    className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-700 rounded-2xl" 
+                    className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-700 rounded-[1.5rem]" 
                     src={project.image}
                   />
                 </div>

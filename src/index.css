@@ -147,9 +147,13 @@ body {
 .glowing-card {
   position: relative;
   background: rgba(17, 19, 27, 0.7);
-  border-radius: 1.5rem;
+  border-radius: 2rem;
   z-index: 0;
   overflow: hidden;
+}
+
+.section-gap {
+  margin-top: var(--spacing-section-gap);
 }
 
 .glowing-card::before {
@@ -159,7 +163,7 @@ body {
   background: conic-gradient(from var(--angle), transparent 70%, #5f8bff, #b3c5ff, transparent);
   border-radius: inherit;
   z-index: -1;
-  animation: rotate-glow 4s linear infinite;
+  animation: rotate-glow 10s linear infinite;
 }
 
 .glowing-card::after {
@@ -173,8 +177,13 @@ body {
 }
 
 @keyframes rotate-glow {
-  0% { --angle: 0deg; }
-  100% { --angle: 360deg; }
+  0% {
+    --angle: 0deg;
+  }
+
+  100% {
+    --angle: 360deg;
+  }
 }
 
 /* Scroll reveals */
@@ -183,15 +192,22 @@ body {
   transform: translateY(30px);
   transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
+
 .reveal.active {
   opacity: 1;
   transform: translateY(0);
 }
 
 @keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
 }
+
 .shimmer-bar::after {
   content: '';
   position: absolute;
@@ -212,6 +228,7 @@ body {
 .interactive-element {
   transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+
 .interactive-element:hover {
   transform: scale(1.02);
   box-shadow: 0 0 25px rgba(95, 139, 255, 0.2);
@@ -221,6 +238,7 @@ body {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
