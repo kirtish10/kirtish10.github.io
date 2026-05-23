@@ -1,6 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { projectsData } from '../data/projectsData';
+import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Magnetic from './Magnetic';
+
+// Register ScrollTrigger plugin
+gsap.registerPlugin(ScrollTrigger);
 
 interface ProjectsProps {
   onSelectTech?: (tech: string | null) => void;
@@ -8,6 +15,7 @@ interface ProjectsProps {
 
 export const Projects: React.FC<ProjectsProps> = ({ onSelectTech }) => {
   const [activeFilter, setActiveFilter] = useState<string>('ALL');
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Dynamically collect all unique technologies across projects to populate filters
   const allTechs = ['ALL', ...Array.from(new Set(projectsData.flatMap(p => p.technologies)))];
@@ -37,34 +45,66 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectTech }) => {
     }
   };
 
+  // GSAP ScrollTrigger card staggering animation
+  useGSAP(() => {
+    // Kill existing scroll triggers inside scope to prevent overlaps
+    ScrollTrigger.getAll().forEach(t => {
+      if (t.trigger && (t.trigger as HTMLElement).classList.contains('project-grid')) {
+        t.kill();
+      }
+    });
+
+    gsap.fromTo('.project-card',
+      { opacity: 0, y: 60, scale: 0.95 },
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.7,
+        stagger: 0.12,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.project-grid',
+          start: 'top 85%',
+          toggleActions: 'play none none reverse',
+        }
+      }
+    );
+  }, { scope: containerRef, dependencies: [activeFilter] }); // Re-run stagger entry when active filter shifts!
+
   return (
-    <section className="section-gap px-margin-mobile md:px-gutter max-w-container-max mx-auto reveal animate-fade-in" id="projects">
+    <section 
+      ref={containerRef}
+      className="section-gap px-margin-mobile md:px-gutter max-w-container-max mx-auto" 
+      id="projects"
+    >
       <div className="text-center mb-16 select-none max-w-2xl mx-auto space-y-6">
         <div>
           <h2 className="font-headline-md text-headline-md font-bold text-on-surface">Selected Works</h2>
           <p className="text-on-surface-variant mt-1.5">Architectures designed for enterprise scale and precision.</p>
         </div>
 
-        {/* Dynamic Interactive Filter Badges Centered */}
+        {/* Dynamic Interactive Filter Badges Centered with Magnetic Pull */}
         <div className="flex flex-wrap justify-center gap-2.5">
           {allTechs.map((tech) => (
-            <button
-              key={tech}
-              onClick={() => handleFilterClick(tech)}
-              className={`px-4 py-1.5 rounded-full text-xs font-bold font-label-caps tracking-wider transition-all active:scale-95 cursor-pointer ${
-                activeFilter === tech 
-                  ? 'bg-primary-container text-on-primary-container shadow-[0_0_12px_rgba(95,139,255,0.4)]' 
-                  : 'glass text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high'
-              }`}
-            >
-              {tech}
-            </button>
+            <Magnetic key={tech}>
+              <button
+                onClick={() => handleFilterClick(tech)}
+                className={`px-4 py-1.5 rounded-full text-xs font-bold font-label-caps tracking-wider transition-all active:scale-95 cursor-pointer ${
+                  activeFilter === tech 
+                    ? 'bg-primary-container text-on-primary-container shadow-[0_0_12px_rgba(95,139,255,0.4)]' 
+                    : 'glass text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high'
+                }`}
+              >
+                {tech}
+              </button>
+            </Magnetic>
           ))}
         </div>
       </div>
 
       {/* Grid of Dynamic Project Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter project-grid">
         {filteredProjects.map((project) => {
           const span = getGridSpan(project.id);
           

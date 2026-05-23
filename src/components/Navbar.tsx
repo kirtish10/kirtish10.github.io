@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import Magnetic from './Magnetic';
 
 interface NavbarProps {
   onTerminalToggle: () => void;
@@ -102,20 +103,24 @@ export const Navbar: React.FC<NavbarProps> = ({ onTerminalToggle }) => {
         </div>
 
         <div className="flex items-center gap-4">
-          <span 
-            className="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-all select-none p-2 hover:bg-surface-variant/40 rounded-full"
-            onClick={onTerminalToggle}
-            title="Open Console Console (help)"
-          >
-            terminal
-          </span>
-          <a 
-            href="#contact" 
-            onClick={(e) => handleNavClick(e, '#contact')}
-            className="bg-primary-container text-on-primary-container px-6 py-2 rounded-full font-bold active:scale-95 transition-all hover:shadow-[0_0_15px_rgba(95,139,255,0.4)] interactive-element block text-center"
-          >
-            Hire Me
-          </a>
+          <Magnetic>
+            <span 
+              className="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-all select-none p-2 hover:bg-surface-variant/40 rounded-full"
+              onClick={onTerminalToggle}
+              title="Open Console Console (help)"
+            >
+              terminal
+            </span>
+          </Magnetic>
+          <Magnetic>
+            <a 
+              href="#contact" 
+              onClick={(e) => handleNavClick(e, '#contact')}
+              className="bg-primary-container text-on-primary-container px-6 py-2 rounded-full font-bold active:scale-95 transition-all hover:shadow-[0_0_15px_rgba(95,139,255,0.4)] interactive-element block text-center"
+            >
+              Hire Me
+            </a>
+          </Magnetic>
         </div>
       </div>
     </nav>

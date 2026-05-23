@@ -1,4 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface SkillBarProps {
   name: string;
@@ -9,7 +14,7 @@ interface SkillBarProps {
 
 const SkillBar: React.FC<SkillBarProps> = ({ name, percent, percentageText, subtitle }) => {
   return (
-    <div className="glass p-6 rounded-[2rem] space-y-4 hover:bg-surface-container-high transition-all interactive-element border border-glass-stroke">
+    <div className="glass p-6 rounded-[2rem] space-y-4 hover:bg-surface-container-high transition-all interactive-element border border-glass-stroke skill-card opacity-0">
       <div className="flex justify-between items-center select-none">
         <span className="font-bold text-on-surface">{name}</span>
         <span className="text-primary-fixed-dim text-sm font-semibold">{percentageText}</span>
@@ -17,7 +22,7 @@ const SkillBar: React.FC<SkillBarProps> = ({ name, percent, percentageText, subt
       
       <div className="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden relative">
         <div 
-          className="h-full bg-gradient-to-r from-primary-fixed-dim to-secondary-fixed relative shimmer-bar rounded-full" 
+          className="h-full bg-gradient-to-r from-primary-fixed-dim to-secondary-fixed relative shimmer-bar rounded-full skill-progress-bar" 
           style={{ width: `${percent}%` }}
         />
       </div>
@@ -28,8 +33,46 @@ const SkillBar: React.FC<SkillBarProps> = ({ name, percent, percentageText, subt
 };
 
 export const Skills: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    // 1. Reveal skill cards with a stagger fade from the bottom
+    gsap.fromTo('.skill-card', 
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.skill-card',
+          start: 'top 85%',
+          toggleActions: 'play none none reverse',
+        }
+      }
+    );
+
+    // 2. Animate the progress bars filling up from left
+    gsap.fromTo('.skill-progress-bar',
+      { scaleX: 0, transformOrigin: 'left' },
+      {
+        scaleX: 1,
+        duration: 1.5,
+        ease: 'power2.out',
+        stagger: 0.15,
+        scrollTrigger: {
+          trigger: '.skill-progress-bar',
+          start: 'top 85%',
+          toggleActions: 'play none none reverse',
+        }
+      }
+    );
+
+  }, { scope: containerRef });
+
   return (
-    <section className="section-gap bg-surface-container-low/30 py-24 reveal" id="skills">
+    <section ref={containerRef} className="section-gap bg-surface-container-low/30 py-24" id="skills">
       <div className="px-margin-mobile md:px-gutter max-w-container-max mx-auto">
         <div className="text-center mb-16 select-none">
           <h2 className="font-headline-md text-headline-md font-bold text-on-surface">Core Stack</h2>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Magnetic from './Magnetic';
 
 const codeSnippet = `@RestController
 @RequestMapping("/api/v1/insurance")
@@ -75,21 +76,25 @@ export const Hero: React.FC = () => {
         </p>
         
         <div className="flex gap-4 pt-4">
-          <a 
-            className="bg-primary-fixed text-on-primary-fixed px-8 py-4 rounded-xl font-bold flex items-center gap-2 hover:shadow-[0_0_20px_rgba(95,139,255,0.4)] transition-all active:scale-95 interactive-element" 
-            href="#projects"
-            onClick={(e) => handleScrollTo(e, 'projects')}
-          >
-            View Projects 
-            <span className="material-symbols-outlined select-none text-base">arrow_forward</span>
-          </a>
-          <a 
-            className="glass px-8 py-4 rounded-xl font-bold hover:bg-surface-container-high transition-all active:scale-95 interactive-element" 
-            href="#contact"
-            onClick={(e) => handleScrollTo(e, 'contact')}
-          >
-            Get In Touch
-          </a>
+          <Magnetic>
+            <a 
+              className="bg-primary-fixed text-on-primary-fixed px-8 py-4 rounded-xl font-bold flex items-center gap-2 hover:shadow-[0_0_20px_rgba(95,139,255,0.4)] transition-all active:scale-95 interactive-element" 
+              href="#projects"
+              onClick={(e) => handleScrollTo(e, 'projects')}
+            >
+              View Projects 
+              <span className="material-symbols-outlined select-none text-base">arrow_forward</span>
+            </a>
+          </Magnetic>
+          <Magnetic>
+            <a 
+              className="glass px-8 py-4 rounded-xl font-bold hover:bg-surface-container-high transition-all active:scale-95 interactive-element" 
+              href="#contact"
+              onClick={(e) => handleScrollTo(e, 'contact')}
+            >
+              Get In Touch
+            </a>
+          </Magnetic>
         </div>
       </div>
 

@@ -6,6 +6,7 @@ import InteractiveBackground from './components/InteractiveBackground';
 import TerminalOverlay from './components/TerminalOverlay';
 import Home from './pages/Home';
 import ProjectDetail from './pages/ProjectDetail';
+import useSmoothScroll from './hooks/useSmoothScroll';
 
 // Helper component to restore scroll positions to the top on page routing
 function ScrollToTop() {
@@ -36,6 +37,7 @@ function AppContent() {
 }
 
 export function App() {
+  useSmoothScroll();
   const [terminalOpen, setTerminalOpen] = useState(false);
 
   // Bind a keyboard shortcut (e.g. Backtick ` or Ctrl+` or Alt+T) to toggle the Terminal Console!
