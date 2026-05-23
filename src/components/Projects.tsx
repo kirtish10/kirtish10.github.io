@@ -35,9 +35,9 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectTech }) => {
   const getGridSpan = (id: string) => {
     switch (id) {
       case 'health-tracking-vest':
-        return 'md:col-span-8';
+        return 'md:col-span-6';
       case 'utm-drone-system':
-        return 'md:col-span-4';
+        return 'md:col-span-6';
       case 'smart-attendance':
         return 'md:col-span-12';
       default:
@@ -75,7 +75,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectTech }) => {
   return (
     <section 
       ref={containerRef}
-      className="section-gap px-margin-mobile md:px-gutter max-w-container-max mx-auto" 
+      className="section-gap px-margin-mobile md:px-gutter max-w-container-max mx-auto py-24 md:py-32" 
       id="projects"
     >
       <div className="text-center mb-16 select-none max-w-2xl mx-auto space-y-6">
@@ -104,7 +104,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectTech }) => {
       </div>
 
       {/* Grid of Dynamic Project Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter project-grid">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 project-grid">
         {filteredProjects.map((project) => {
           const span = getGridSpan(project.id);
           
@@ -112,18 +112,18 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectTech }) => {
             return (
               <div 
                 key={project.id}
-                className={`${span} group relative overflow-hidden rounded-[2rem] glowing-card p-1 interactive-element project-card border border-glass-stroke`}
+                className={`${span} group relative overflow-hidden rounded-[2.5rem] glowing-card p-1 interactive-element project-card border border-glass-stroke`}
               >
-                <div className="h-[400px] w-full relative rounded-[1.75rem] overflow-hidden">
+                <div className="h-[500px] md:h-[600px] w-full relative rounded-[2.25rem] overflow-hidden">
                   <img 
                     alt={project.title} 
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                     src={project.image}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-surface-dim via-transparent to-transparent z-10" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-surface-dim via-surface-dim/40 to-transparent z-10" />
                   <div className="absolute bottom-8 left-8 right-8 z-20">
-                    <div className="flex gap-2 mb-4">
-                      {project.technologies.slice(0, 3).map((tech) => (
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.technologies.slice(0, 4).map((tech) => (
                         <span key={tech} className="bg-secondary-container/40 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-secondary-fixed">
                           {tech}
                         </span>
@@ -146,17 +146,17 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectTech }) => {
             return (
               <div 
                 key={project.id}
-                className={`${span} group glowing-card rounded-[2rem] p-8 flex flex-col justify-between transition-all interactive-element project-card border border-glass-stroke`}
+                className={`${span} group glowing-card rounded-[2.5rem] p-8 md:p-12 flex flex-col justify-between transition-all interactive-element project-card border border-glass-stroke h-[500px] md:h-[600px]`}
               >
-                <div className="relative z-10">
-                  <div className="w-12 h-12 rounded-xl bg-primary-fixed-dim/20 flex items-center justify-center text-primary-fixed-dim mb-6">
-                    <span className="material-symbols-outlined select-none">flight_takeoff</span>
+                <div className="relative z-10 flex flex-col justify-center h-full">
+                  <div className="w-16 h-16 rounded-2xl bg-primary-fixed-dim/20 flex items-center justify-center text-primary-fixed-dim mb-8">
+                    <span className="material-symbols-outlined select-none text-3xl">flight_takeoff</span>
                   </div>
-                  <h3 className="font-headline-md text-on-surface text-xl font-bold mb-4">{project.title}</h3>
-                  <p className="text-on-surface-variant text-sm mb-6">{project.tagline}</p>
-                  <div className="flex flex-wrap gap-2">
+                  <h3 className="font-headline-md text-on-surface text-3xl font-bold mb-4">{project.title}</h3>
+                  <p className="text-on-surface-variant text-base mb-8 max-w-md leading-relaxed">{project.tagline}</p>
+                  <div className="flex flex-wrap gap-2.5">
                     {project.technologies.map((tech) => (
-                      <span key={tech} className="px-3 py-1 rounded-full glass text-[10px] uppercase tracking-wider text-on-surface-variant font-label-caps">
+                      <span key={tech} className="px-3.5 py-1.5 rounded-full glass text-[10px] uppercase tracking-wider text-on-surface-variant font-label-caps font-bold">
                         {tech}
                       </span>
                     ))}
@@ -164,7 +164,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectTech }) => {
                 </div>
                 <Link 
                   to={`/project/${project.id}`}
-                  className="mt-8 flex items-center gap-2 text-primary-fixed-dim group-hover:gap-4 transition-all relative z-10 font-bold"
+                  className="mt-auto flex items-center gap-2 text-primary-fixed-dim group-hover:gap-4 transition-all relative z-10 font-bold text-sm"
                 >
                   Case Study 
                   <span className="material-symbols-outlined select-none text-base">arrow_forward</span>
@@ -176,24 +176,24 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectTech }) => {
             return (
               <div 
                 key={project.id}
-                className={`${span} glowing-card rounded-[2rem] p-8 flex flex-col md:flex-row items-center gap-12 group interactive-element project-card border border-glass-stroke`}
+                className={`${span} glowing-card rounded-[2.5rem] p-8 md:p-12 flex flex-col md:flex-row items-center gap-12 group interactive-element project-card border border-glass-stroke`}
               >
-                <div className="md:w-1/2 w-full relative z-10 overflow-hidden rounded-[1.5rem]">
+                <div className="md:w-1/2 w-full relative z-10 overflow-hidden rounded-[2rem]">
                   <img 
                     alt={project.title} 
-                    className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-700 rounded-[1.5rem]" 
+                    className="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-700 rounded-[2rem]" 
                     src={project.image}
                   />
                 </div>
                 <div className="md:w-1/2 w-full relative z-10">
                   <span className="text-accent-lime text-label-caps font-bold">Smart India Hackathon Winner</span>
-                  <h3 className="font-headline-md text-on-surface text-2xl font-bold mt-2 mb-4">{project.title}</h3>
-                  <p className="text-on-surface-variant mb-6 text-sm leading-relaxed">{project.tagline} {project.description.slice(0, 80)}...</p>
+                  <h3 className="font-headline-md text-on-surface text-3xl font-bold mt-2 mb-4">{project.title}</h3>
+                  <p className="text-on-surface-variant mb-6 text-base leading-relaxed">{project.tagline} {project.description.slice(0, 100)}...</p>
                   <div className="flex gap-4 items-center mb-6">
                     <span className="material-symbols-outlined text-primary-fixed-dim select-none" title="Verified Security">verified</span>
                     <span className="material-symbols-outlined text-primary-fixed-dim select-none" title="Biometric AI Face Engine">face</span>
                     <div className="flex flex-wrap gap-1.5 ml-2">
-                      {project.technologies.slice(0, 3).map((tech) => (
+                      {project.technologies.slice(0, 4).map((tech) => (
                         <span key={tech} className="px-2 py-0.5 rounded glass text-[9px] uppercase tracking-wider text-on-surface-variant font-label-caps">
                           {tech}
                         </span>
@@ -202,7 +202,7 @@ export const Projects: React.FC<ProjectsProps> = ({ onSelectTech }) => {
                   </div>
                   <Link 
                     to={`/project/${project.id}`}
-                    className="inline-flex items-center gap-2 text-primary-fixed-dim group-hover:gap-4 transition-all font-bold"
+                    className="inline-flex items-center gap-2 text-primary-fixed-dim group-hover:gap-4 transition-all font-bold text-sm"
                   >
                     Case Study 
                     <span className="material-symbols-outlined select-none text-base">arrow_forward</span>
